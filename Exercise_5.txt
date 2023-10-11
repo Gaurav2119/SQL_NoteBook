@@ -1,0 +1,21 @@
+/*
+Write a Procedure supplying name information from the Person.
+Person table and accepting a filter for the first name. 
+Alter the above Store Procedure to supply Default Values if user does not enter any value.
+( Use AdventureWorks)
+*/
+
+CREATE PROCEDURE GetPersonName
+    @FirstNameFilter VARCHAR(20) = NULL
+AS
+		IF @FirstNameFilter IS NULL OR @FirstNameFilter = ''
+        SET @FirstNameFilter = '%'
+
+    SELECT FirstName, MiddleName, LastName
+    FROM Person.Person
+    WHERE FirstName LIKE @FirstNameFilter
+GO
+
+use AdventureWorks2008R2
+
+EXEC dbo.GetPersonName @FirstNameFilter = 'Ken'
